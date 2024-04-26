@@ -51,4 +51,20 @@ jobs:
       - name: deploy to container
         run: docker run -d --name myapp -p 5000:3000 captaingab/tic-tac-toe:latest
 
+      - name: Update kubeconfig
+        run: aws eks --region eu-west-1 update-kubeconfig --name EKS_CLOUD
+
+      - name: Deploy to kubernetes
+        run: kubectl apply -f deployment-service.yml
+
+      - name: Send a Slack Notification
+        if: always()
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#deel-tech-assignment'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 
