@@ -33,3 +33,6 @@ jobs:
           docker push captaingab/tic-tac-toe:latest
         env:
           DOCKER_CLI_ACI: 1
+
+      - name: image scan by trivy
+        run: trivy image captaingab/tic-tac-toe:latest > trivy-image-scan-result.txt
