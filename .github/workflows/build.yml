@@ -49,5 +49,5 @@ jobs:
         run: trivy image captaingab/tic-tac-toe:latest > trivy-image-scan-result-deploy.txt
 
       - name: deploy to container
-        run: docker run -d javaapp -p 3000:3000 captaingab/tic-tac-toe:latest
+        run: docker run -d --name javaapp -p 3000:3000 captaingab/tic-tac-toe:latest
 
